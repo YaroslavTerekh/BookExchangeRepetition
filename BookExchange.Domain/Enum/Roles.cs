@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookExchange.Domain.Enum
 {
-    internal enum Roles
+    public enum Roles
     {
         Admin,
         User
