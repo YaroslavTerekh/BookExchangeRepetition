@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BookExchange.Domain.Enum;
 
 namespace BookExchange.Domain.Models
 {
