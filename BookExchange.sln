@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookExchange", "BookExchange\BookExchange.csproj", "{6AC19773-0DFA-49E0-9FBA-D2071CD05CA6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookExchange.Domain", "BookExchange.Domain\BookExchange.Domain.csproj", "{55BDDDE8-4893-497A-BD77-2C59E4F2627C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{6AC19773-0DFA-49E0-9FBA-D2071CD05CA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AC19773-0DFA-49E0-9FBA-D2071CD05CA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AC19773-0DFA-49E0-9FBA-D2071CD05CA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55BDDDE8-4893-497A-BD77-2C59E4F2627C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55BDDDE8-4893-497A-BD77-2C59E4F2627C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55BDDDE8-4893-497A-BD77-2C59E4F2627C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55BDDDE8-4893-497A-BD77-2C59E4F2627C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
