@@ -13,6 +13,18 @@ namespace BookExchange.Middleware
             _next = next;
         }
 
+        public async Task Invoke(HttpContext context)
+        {
+            try
+            {
+                await _next(context);
+            } 
+            catch (Exception exc)
+            {
+                await HandleException(exc, context);
+            }
+        }
+
         private Task HandleException(Exception exception, HttpContext context)
         {
             var code = HttpStatusCode.InternalServerError;
