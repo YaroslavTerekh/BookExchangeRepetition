@@ -9,8 +9,7 @@ namespace BookExchange.Domain.Models
 {
     public class Image
     {
-        [Column("ImageId")]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Path { get; set; }
         public DateTime Date { get; set; }
     }

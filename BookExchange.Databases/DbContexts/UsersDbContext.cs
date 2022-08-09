@@ -10,7 +10,7 @@ namespace BookExchange.Databases.DbContexts
 {
     public class UsersDbContext : DbContext
     {
-        public UsersDbContext(DbContextOptions opts) : base(opts) { }
+        public UsersDbContext(DbContextOptions<UsersDbContext> opts) : base(opts) { }
 
         public DbSet<User> Users { get; set; }
     }
