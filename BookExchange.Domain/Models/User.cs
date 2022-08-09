@@ -8,20 +8,19 @@ namespace BookExchange.Domain.Models
 {
     public class User
     {
-        [Column("UserId")]
-        public Guid ID { get; set; }
-        [Required(ErrorMessage = "Enter your name!")]
-        [MaxLength(15, ErrorMessage = "Too long name!")]
+        public int ID { get; set; }
+        //[Required(ErrorMessage = "Enter your name!")]
+        //[MaxLength(15, ErrorMessage = "Too long name!")]
         public string Name { get; set; }
-        [MaxLength(20, ErrorMessage = "Too long second name!")]
-        [Required(ErrorMessage = "Enter your second name!")]
+        //[MaxLength(20, ErrorMessage = "Too long second name!")]
+        //[Required(ErrorMessage = "Enter your second name!")]
         public string SecondName { get; set; }
-        [Required(ErrorMessage = "Enter your e-mail!")]
+        //[Required(ErrorMessage = "Enter your e-mail!")]
         public string Email { get; set; }
-        [Required]
+        //[Required]
         public AddressInfo Address { get; set; }
         public DateTime RegisteredDate { get; set; }
-        [Required]
+        //[Required]
         public string Password { get; set; }
         public Roles Role { get; set; }
 
