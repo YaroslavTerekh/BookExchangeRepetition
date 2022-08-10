@@ -21,41 +21,76 @@ namespace BookExchange.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<BookDTO>> Books()
+        public async Task<IActionResult> Books()
         {
-            var books = await _contentRepo.GetAllBooks();
+            try
+            {
+                var books = await _contentRepo.GetAllBooks();
 
-            return _mapper.Map<IEnumerable<BookDTO>>(books);
+                return Ok(_mapper.Map<IEnumerable<BookDTO>>(books));
+            }
+            catch (Exception exc)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
         }
 
         [HttpGet("{id}")]
-        public async Task<Book> GetBook(int id)
+        public async Task<IActionResult> GetBook(int id)
         {
-            return await _contentRepo.GetBook(id);
+            try
+            {
+                return Ok(await _contentRepo.GetBook(id));
+            }
+            catch(Exception exc)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> AddBook(Book book)
         {
-            await _contentRepo.AddBook(book);
+            try
+            {
+                await _contentRepo.AddBook(book);
 
-            return CreatedAtAction(nameof(_contentRepo.AddBook), new { id = book.Id }, book);
+                return CreatedAtAction(nameof(_contentRepo.AddBook), new { id = book.Id }, book);
+            }
+            catch(Exception exc)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
         }
 
         [HttpPut]
         public async Task<IActionResult> ModifyBook(Book book)
         {
-            await _contentRepo.ModifyBook(book);
+            try
+            {
+                await _contentRepo.ModifyBook(book);
 
-            return Ok();
+                return Ok();
+            }
+            catch(Exception exc)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBook(int id)
         {
-            await _contentRepo.DeleteBook(id);
+            try
+            {
+                await _contentRepo.DeleteBook(id);
 
-            return NoContent();
+                return Ok($"Book with id {id} was deleted");
+            }
+            catch (Exception exc)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }            
         }
     }
 }
