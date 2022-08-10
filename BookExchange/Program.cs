@@ -1,5 +1,7 @@
 using BookExchange.Databases;
 using BookExchange.Databases.DbContexts;
+using BookExchange.Databases.DbRepositories;
+using BookExchange.Databases.DbRepositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 // Add SQL Server
 builder.Services.AddDbContextsCustom(builder.Configuration);
+//Depency Injection
+builder.Services.AddTransient<IContentRepository, ContentRepository>();
+builder.Services.AddTransient<IUsersRepository, UsersRepository>();
 
 var app = builder.Build();
 

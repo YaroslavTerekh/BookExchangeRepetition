@@ -56,6 +56,12 @@ namespace BookExchange.Databases.DbRepositories
             return _context.Orders.ToList();
         }
 
+        public void AddOrder(ExchangeOrder order)
+        {
+            _context.Orders.Add(order);
+            _context.SaveChanges();
+        }
+
         public ExchangeOrder GetOrder(int id)
         {
             return _context.Orders.Where(o => o.Id == id).FirstOrDefault();
@@ -69,7 +75,7 @@ namespace BookExchange.Databases.DbRepositories
 
         public void ModifyOrder(ExchangeOrder order)
         {
-            var originalOrder = GetBook(order.Id);
+            var originalOrder = GetOrder(order.Id);
 
             originalOrder.FirstAddress = order.FirstAddress;
             originalOrder.SecondAddress = order.SecondAddress;
