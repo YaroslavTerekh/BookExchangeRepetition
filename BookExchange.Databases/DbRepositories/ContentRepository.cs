@@ -7,6 +7,7 @@ using BookExchange.Databases.DbContexts;
 using BookExchange.Domain.Models;
 using System.Linq;
 using BookExchange.Databases.DbRepositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookExchange.Databases.DbRepositories
 {
@@ -18,37 +19,45 @@ namespace BookExchange.Databases.DbRepositories
             _context = ctx;
         }
         //Books
-        public IEnumerable<Book> GetAllBooks()
+        public async Task<IEnumerable<Book>> GetAllBooks()
         {
-            return _context.Books.ToList();
+            return await _context.Books
+                .Include(b => b.Image)
+                .Include(b => b.Owner)
+                .ThenInclude(o => o.Address)
+                .ToListAsync();
         }
 
-        public void AddBook(Book book)
+        public async Task AddBook(Book book)
         {
-            _context.Books.Add(book);
-            _context.SaveChanges();
+            await _context.Books.AddAsync(book);
+            await _context.SaveChangesAsync();
         }
 
-        public Book GetBook (int id)
+        public async Task<Book?> GetBook(int id)
         {
-            return _context.Books.Where(b => b.Id == id).FirstOrDefault();
+            return await _context.Books.Where(b => b.Id == id)
+                .Include(b => b.Image)
+                .Include(b => b.Owner)
+                .ThenInclude(o => o.Address)
+                .FirstOrDefaultAsync();
         }
 
-        public void DeleteBook(int id)
+        public async Task DeleteBook(int id)
         {
-            _context.Books.Remove(GetBook(id));
-            _context.SaveChanges();
+            _context.Books.Remove(await GetBook(id));
+            await _context.SaveChangesAsync();
         }
 
-        public void ModifyBook(Book book)
+        public async Task ModifyBook(Book book)
         {
-            Book originalBook = GetBook(book.Id);
+            Book originalBook = await GetBook(book.Id);
 
             originalBook.Title = book.Title;
             originalBook.Description = book.Description;
             originalBook.Image = book.Image;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
         //Orders
         public IEnumerable<ExchangeOrder> GetAllOrders()
@@ -56,33 +65,33 @@ namespace BookExchange.Databases.DbRepositories
             return _context.Orders.ToList();
         }
 
-        public void AddOrder(ExchangeOrder order)
+        public async Task AddOrder(ExchangeOrder order)
         {
-            _context.Orders.Add(order);
-            _context.SaveChanges();
+            await _context.Orders.AddAsync(order);
+            await _context.SaveChangesAsync();
         }
 
-        public ExchangeOrder GetOrder(int id)
+        public async Task<ExchangeOrder> GetOrder(int id)
         {
-            return _context.Orders.Where(o => o.Id == id).FirstOrDefault();
+            return await _context.Orders.Where(o => o.Id == id).FirstOrDefaultAsync();
         }
 
-        public void DeleteOrder(int id)
+        public async Task DeleteOrder(int id)
         {
-            _context.Orders.Remove(GetOrder(id));
-            _context.SaveChanges();
+            _context.Orders.Remove(await GetOrder(id));
+            await _context.SaveChangesAsync();
         }
 
-        public void ModifyOrder(ExchangeOrder order)
+        public async Task ModifyOrder(ExchangeOrder order)
         {
-            var originalOrder = GetOrder(order.Id);
+            ExchangeOrder originalOrder = await GetOrder(order.Id);
 
             originalOrder.FirstAddress = order.FirstAddress;
             originalOrder.SecondAddress = order.SecondAddress;
             originalOrder.FirstBookId = order.FirstBookId;
             originalOrder.SecondBookId = order.SecondBookId;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

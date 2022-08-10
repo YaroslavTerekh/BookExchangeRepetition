@@ -24,8 +24,6 @@ namespace BookExchange.Domain.Models
         public string Password { get; set; }
         public Roles Role { get; set; }
 
-        public IEnumerable<Book> Books { get; set; }
-
         public bool IsBanned { get; set; }
     }
 }
