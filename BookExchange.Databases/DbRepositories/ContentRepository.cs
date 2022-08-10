@@ -60,9 +60,9 @@ namespace BookExchange.Databases.DbRepositories
             await _context.SaveChangesAsync();
         }
         //Orders
-        public IEnumerable<ExchangeOrder> GetAllOrders()
+        public async Task<IEnumerable<ExchangeOrder>> GetAllOrders()
         {
-            return _context.Orders.ToList();
+            return await _context.Orders.ToListAsync();
         }
 
         public async Task AddOrder(ExchangeOrder order)
