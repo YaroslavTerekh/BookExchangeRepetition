@@ -1,5 +1,7 @@
-﻿using BookExchange.Databases.DbRepositories.Interfaces;
+﻿using AutoMapper;
+using BookExchange.Databases.DbRepositories.Interfaces;
 using BookExchange.Domain.Models;
+using BookExchange.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,16 +12,20 @@ namespace BookExchange.Controllers
     public class BooksController : ControllerBase
     {
         private readonly IContentRepository _contentRepo;
+        private readonly IMapper _mapper;
 
-        public BooksController(IContentRepository contentRepo)
+        public BooksController(IContentRepository contentRepo, IMapper mapper)
         {
+            _mapper = mapper;
             _contentRepo = contentRepo;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Book>> Books()
+        public async Task<IEnumerable<BookDTO>> Books()
         {
-            return await _contentRepo.GetAllBooks();
+            var books = await _contentRepo.GetAllBooks();
+
+            return _mapper.Map<IEnumerable<BookDTO>>(books);
         }
 
         [HttpGet("{id}")]
