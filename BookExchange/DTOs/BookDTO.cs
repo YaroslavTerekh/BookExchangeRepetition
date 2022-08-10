@@ -6,7 +6,6 @@
         public string Title { get; set; }
         public string Description { get; set; }
         public ImageDTO Image { get; set; }
-        public UserDTO User { get; set; }
-
+        public UserDTO Owner { get; set; }
     }
 }
