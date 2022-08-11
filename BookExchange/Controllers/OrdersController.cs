@@ -31,7 +31,7 @@ namespace BookExchange.Controllers
             }
             catch (Exception exc)
             {
-                return StatusCode(500, "Internal Server Error");
+                return StatusCode(500, exc.Message);
             }
         }
 
@@ -44,7 +44,7 @@ namespace BookExchange.Controllers
             }
             catch (Exception exc)
             {
-                return StatusCode(500, "Internal Server Error");
+                return StatusCode(500, exc.Message);
             }
         }
 
@@ -59,7 +59,7 @@ namespace BookExchange.Controllers
             }
             catch (Exception exc)
             {
-                return StatusCode(500, "Internal Server Error");
+                return StatusCode(500, exc.Message);
             }
         }
 
@@ -74,7 +74,7 @@ namespace BookExchange.Controllers
             }
             catch (Exception exc)
             {
-                return StatusCode(500, "Internal Server Error");
+                return StatusCode(500, exc.Message);
             }
         }
 
