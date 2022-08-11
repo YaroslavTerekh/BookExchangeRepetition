@@ -14,7 +14,7 @@ namespace BookExchange.Databases.DbRepositories.Interfaces
         public Task<Book> GetBook(int id);
         public Task DeleteBook(int id);
         public Task ModifyBook(Book book);
-        public IEnumerable<ExchangeOrder> GetAllOrders();     
+        public Task<IEnumerable<ExchangeOrder>> GetAllOrders();     
         public Task AddOrder(ExchangeOrder order);
         public Task<ExchangeOrder> GetOrder(int id);
         public Task DeleteOrder(int id);

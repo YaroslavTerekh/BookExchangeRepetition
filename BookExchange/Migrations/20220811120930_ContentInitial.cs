@@ -93,6 +93,33 @@ namespace BookExchange.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstBookId = table.Column<int>(type: "int", nullable: false),
+                    SecondBookId = table.Column<int>(type: "int", nullable: false),
+                    IsApproved = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Books_FirstBookId",
+                        column: x => x.FirstBookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Orders_Books_SecondBookId",
+                        column: x => x.SecondBookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Books_ImageId",
                 table: "Books",
@@ -104,6 +131,16 @@ namespace BookExchange.Migrations
                 column: "OwnerID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_FirstBookId",
+                table: "Orders",
+                column: "FirstBookId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_SecondBookId",
+                table: "Orders",
+                column: "SecondBookId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_User_AddressId",
                 table: "User",
                 column: "AddressId");
@@ -111,6 +148,9 @@ namespace BookExchange.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Orders");
+
             migrationBuilder.DropTable(
                 name: "Books");
 

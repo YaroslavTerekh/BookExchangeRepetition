@@ -9,25 +9,25 @@ namespace BookExchange.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BooksController : ControllerBase
+    public class OrdersController : ControllerBase
     {
         private readonly IContentRepository _contentRepo;
         private readonly IMapper _mapper;
 
-        public BooksController(IContentRepository contentRepo, IMapper mapper)
+        public OrdersController(IContentRepository contentRepo, IMapper mapper)
         {
-            _mapper = mapper;
             _contentRepo = contentRepo;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Books()
+        public async Task<IActionResult> Orders()
         {
             try
             {
-                var books = await _contentRepo.GetAllBooks();
+                var orders = await _contentRepo.GetAllOrders();
 
-                return Ok(_mapper.Map<IEnumerable<BookDTO>>(books));
+                return Ok(_mapper.Map<IEnumerable<ExchangeOrderDTO>>(orders));
             }
             catch (Exception exc)
             {
@@ -36,61 +36,61 @@ namespace BookExchange.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetBook(int id)
+        public async Task<IActionResult> GetOrder(int id)
         {
             try
             {
-                return Ok(_mapper.Map<BookDTO>(await _contentRepo.GetBook(id)));
+                return Ok(_mapper.Map<ExchangeOrderDTO>(await _contentRepo.GetOrder(id)));
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 return StatusCode(500, exc.Message);
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddBook(Book book)
+        public async Task<IActionResult> AddBook(ExchangeOrder order)
         {
             try
             {
-                await _contentRepo.AddBook(book);
+                await _contentRepo.AddOrder(order);
 
-                return CreatedAtAction(nameof(_contentRepo.AddBook), new { id = book.Id }, book);
+                return CreatedAtAction(nameof(_contentRepo.AddBook), new { id = order.Id }, order);
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 return StatusCode(500, exc.Message);
             }
         }
 
         [HttpPut]
-        public async Task<IActionResult> ModifyBook(Book book)
+        public async Task<IActionResult> ModifyOrder(ExchangeOrder order)
         {
             try
             {
-                await _contentRepo.ModifyBook(book);
+                await _contentRepo.ModifyOrder(order);
 
                 return Ok();
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 return StatusCode(500, exc.Message);
             }
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBook(int id)
+        public async Task<IActionResult> DeleteOrder(int id)
         {
             try
             {
-                await _contentRepo.DeleteBook(id);
+                await _contentRepo.DeleteOrder(id);
 
-                return Ok($"Book with id {id} was deleted");
+                return Ok($"Orded with id {id} was deleted");
             }
             catch (Exception exc)
             {
-                return StatusCode(500, exc.Message);
-            }            
+                return StatusCode(500, "Internal Server Error");
+            }
         }
     }
 }
