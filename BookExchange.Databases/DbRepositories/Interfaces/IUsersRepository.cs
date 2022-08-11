@@ -9,8 +9,8 @@ namespace BookExchange.Databases.DbRepositories.Interfaces
 {
     public interface IUsersRepository
     {
-        public IEnumerable<User> GetAllUsers();
-        public User GetUser(int id);
-        public void ModifyUserInfo(User user);
+        public Task<IEnumerable<User>> GetAllUsers();
+        public Task<User> GetUser(int id);
+        public Task ModifyUserInfo(User user);
     }
 }
