@@ -1,6 +1,7 @@
 ﻿using BookExchange.Databases.DbContexts;
 using BookExchange.Databases.DbRepositories.Interfaces;
 using BookExchange.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,19 +18,19 @@ namespace BookExchange.Databases.DbRepositories
             _context = context;
         }
 
-        public IEnumerable<User> GetAllUsers()
+        public async Task<IEnumerable<User>> GetAllUsers()
         {
-            return _context.Users.ToList();
+            return await _context.Users.ToListAsync();
         }
 
-        public User GetUser(int id)
+        public async Task<User> GetUser(int id)
         {
-            return _context.Users.Where(u => u.ID == id).FirstOrDefault();
+            return await _context.Users.Where(u => u.ID == id).FirstOrDefaultAsync();
         }
 
-        public void ModifyUserInfo(User user)
+        public async Task ModifyUserInfo(User user)
         {
-            User originalUser = GetUser(user.ID);
+            User originalUser = await GetUser(user.ID);
 
             originalUser.Name = user.Name;
             originalUser.SecondName = user.SecondName;
@@ -38,7 +39,7 @@ namespace BookExchange.Databases.DbRepositories
             originalUser.Password = user.Password;
             originalUser.Role = user.Role;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }
