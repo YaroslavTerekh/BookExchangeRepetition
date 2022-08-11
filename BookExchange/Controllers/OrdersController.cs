@@ -85,7 +85,7 @@ namespace BookExchange.Controllers
             {
                 await _contentRepo.DeleteOrder(id);
 
-                return Ok($"Book with id {id} was deleted");
+                return Ok($"Orded with id {id} was deleted");
             }
             catch (Exception exc)
             {

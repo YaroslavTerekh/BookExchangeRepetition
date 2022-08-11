@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookExchange.Migrations
 {
     [DbContext(typeof(ContentDbContext))]
-    [Migration("20220808212641_ContentInitial")]
+    [Migration("20220811120930_ContentInitial")]
     partial class ContentInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -81,6 +81,32 @@ namespace BookExchange.Migrations
                     b.HasIndex("OwnerID");
 
                     b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("BookExchange.Domain.Models.ExchangeOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("FirstBookId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SecondBookId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FirstBookId");
+
+                    b.HasIndex("SecondBookId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("BookExchange.Domain.Models.Image", b =>
@@ -155,7 +181,7 @@ namespace BookExchange.Migrations
                         .IsRequired();
 
                     b.HasOne("BookExchange.Domain.Models.User", "Owner")
-                        .WithMany("Books")
+                        .WithMany()
                         .HasForeignKey("OwnerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -163,6 +189,25 @@ namespace BookExchange.Migrations
                     b.Navigation("Image");
 
                     b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("BookExchange.Domain.Models.ExchangeOrder", b =>
+                {
+                    b.HasOne("BookExchange.Domain.Models.Book", "FirstBook")
+                        .WithMany()
+                        .HasForeignKey("FirstBookId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BookExchange.Domain.Models.Book", "SecondBook")
+                        .WithMany()
+                        .HasForeignKey("SecondBookId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("FirstBook");
+
+                    b.Navigation("SecondBook");
                 });
 
             modelBuilder.Entity("BookExchange.Domain.Models.User", b =>
@@ -174,11 +219,6 @@ namespace BookExchange.Migrations
                         .IsRequired();
 
                     b.Navigation("Address");
-                });
-
-            modelBuilder.Entity("BookExchange.Domain.Models.User", b =>
-                {
-                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }

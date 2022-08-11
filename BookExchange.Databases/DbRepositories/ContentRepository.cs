@@ -62,7 +62,12 @@ namespace BookExchange.Databases.DbRepositories
         //Orders
         public async Task<IEnumerable<ExchangeOrder>> GetAllOrders()
         {
-            return await _context.Orders.ToListAsync();
+            return await _context.Orders
+                .Include(o => o.FirstBook).ThenInclude(b => b.Image)
+                .Include(o => o.FirstBook).ThenInclude(b => b.Owner.Address)
+                .Include(o => o.SecondBook).ThenInclude(b => b.Image)
+                .Include(o => o.SecondBook).ThenInclude(b => b.Owner.Address)
+                .ToListAsync();
         }
 
         public async Task AddOrder(ExchangeOrder order)
@@ -71,9 +76,14 @@ namespace BookExchange.Databases.DbRepositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ExchangeOrder> GetOrder(int id)
+        public async Task<ExchangeOrder?> GetOrder(int id)
         {
-            return await _context.Orders.Where(o => o.Id == id).FirstOrDefaultAsync();
+            return await _context.Orders
+                .Where(o => o.Id == id)
+                .Include(o => o.FirstBook).ThenInclude(b => b.Image)
+                .Include(o => o.FirstBook).ThenInclude(b => b.Owner.Address)
+                .Include(o => o.SecondBook).ThenInclude(b => b.Image)
+                .Include(o => o.SecondBook).ThenInclude(b => b.Owner.Address).FirstOrDefaultAsync();
         }
 
         public async Task DeleteOrder(int id)
@@ -86,10 +96,8 @@ namespace BookExchange.Databases.DbRepositories
         {
             ExchangeOrder originalOrder = await GetOrder(order.Id);
 
-            originalOrder.FirstAddress = order.FirstAddress;
-            originalOrder.SecondAddress = order.SecondAddress;
-            originalOrder.FirstBookId = order.FirstBookId;
-            originalOrder.SecondBookId = order.SecondBookId;
+            originalOrder.FirstBook = order.FirstBook;
+            originalOrder.SecondBook = order.SecondBook;
 
             await _context.SaveChangesAsync();
         }
