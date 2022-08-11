@@ -40,7 +40,7 @@ namespace BookExchange.Controllers
         {
             try
             {
-                return Ok(await _contentRepo.GetBook(id));
+                return Ok(_mapper.Map<BookDTO>(await _contentRepo.GetBook(id)));
             }
             catch(Exception exc)
             {
