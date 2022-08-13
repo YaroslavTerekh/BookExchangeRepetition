@@ -9,7 +9,7 @@ namespace BookExchange.Domain.Models
 {
     public class Image
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Path { get; set; }
         public DateTime Date { get; set; }
     }

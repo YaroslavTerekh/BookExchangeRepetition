@@ -23,8 +23,6 @@ namespace BookExchange.Databases.DbRepositories
         {
             return await _context.Books
                 .Include(b => b.Image)
-                .Include(b => b.Owner)
-                .ThenInclude(o => o.Address)
                 .ToListAsync();
         }
 
@@ -34,16 +32,14 @@ namespace BookExchange.Databases.DbRepositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Book?> GetBook(int id)
+        public async Task<Book?> GetBook(Guid id)
         {
             return await _context.Books.Where(b => b.Id == id)
                 .Include(b => b.Image)
-                .Include(b => b.Owner)
-                .ThenInclude(o => o.Address)
                 .FirstOrDefaultAsync();
         }
 
-        public async Task DeleteBook(int id)
+        public async Task DeleteBook(Guid id)
         {
             _context.Books.Remove(await GetBook(id));
             await _context.SaveChangesAsync();
@@ -55,7 +51,7 @@ namespace BookExchange.Databases.DbRepositories
 
             originalBook.Title = book.Title;
             originalBook.Description = book.Description;
-            originalBook.Image = book.Image;
+            originalBook.Image.Path = book.Image.Path;
 
             await _context.SaveChangesAsync();
         }
@@ -63,10 +59,6 @@ namespace BookExchange.Databases.DbRepositories
         public async Task<IEnumerable<ExchangeOrder>> GetAllOrders()
         {
             return await _context.Orders
-                .Include(o => o.FirstBook).ThenInclude(b => b.Image)
-                .Include(o => o.FirstBook).ThenInclude(b => b.Owner.Address)
-                .Include(o => o.SecondBook).ThenInclude(b => b.Image)
-                .Include(o => o.SecondBook).ThenInclude(b => b.Owner.Address)
                 .ToListAsync();
         }
 
@@ -76,17 +68,13 @@ namespace BookExchange.Databases.DbRepositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ExchangeOrder?> GetOrder(int id)
+        public async Task<ExchangeOrder?> GetOrder(Guid id)
         {
-            return await _context.Orders
-                .Where(o => o.Id == id)
-                .Include(o => o.FirstBook).ThenInclude(b => b.Image)
-                .Include(o => o.FirstBook).ThenInclude(b => b.Owner.Address)
-                .Include(o => o.SecondBook).ThenInclude(b => b.Image)
-                .Include(o => o.SecondBook).ThenInclude(b => b.Owner.Address).FirstOrDefaultAsync();
+            return await _context.Orders.Where(o => o.Id == id)                
+                .FirstOrDefaultAsync();
         }
 
-        public async Task DeleteOrder(int id)
+        public async Task DeleteOrder(Guid id)
         {
             _context.Orders.Remove(await GetOrder(id));
             await _context.SaveChangesAsync();
@@ -96,8 +84,31 @@ namespace BookExchange.Databases.DbRepositories
         {
             ExchangeOrder originalOrder = await GetOrder(order.Id);
 
-            originalOrder.FirstBook = order.FirstBook;
-            originalOrder.SecondBook = order.SecondBook;
+            originalOrder.FirstBookId = order.FirstBookId;
+            originalOrder.SecondBookId = order.SecondBookId;
+            originalOrder.IsApproved = order.IsApproved;
+
+            await _context.SaveChangesAsync();
+        }
+        // Users
+        public async Task<IEnumerable<User>> GetAllUsers()
+        {
+            return await _context.Users.ToListAsync();
+        }
+
+        public async Task<User> GetUser(Guid id)
+        {
+            return await _context.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task RegisterUser(User user)
+        {
+
+        }
+
+        public async Task ModifyUserInfo(User user)
+        {
+            _context.Update(user);
 
             await _context.SaveChangesAsync();
         }

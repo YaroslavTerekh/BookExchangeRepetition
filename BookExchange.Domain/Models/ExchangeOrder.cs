@@ -9,9 +9,9 @@ namespace BookExchange.Domain.Models
 {
     public class ExchangeOrder
     {
-        public int Id { get; set; }
-        public Book FirstBook { get; set; }
-        public Book SecondBook { get; set; }
+        public Guid Id { get; set; }
+        public Guid FirstBookId { get; set; }
+        public Guid SecondBookId { get; set; }
 
         public bool IsApproved { get; set; }
     }

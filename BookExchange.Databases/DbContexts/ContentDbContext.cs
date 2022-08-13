@@ -5,10 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BookExchange.Domain.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace BookExchange.Databases.DbContexts
 {
-    public class ContentDbContext : DbContext
+    public class ContentDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
     {
         public ContentDbContext(DbContextOptions<ContentDbContext> opts) : base(opts) { }
 
@@ -17,15 +19,17 @@ namespace BookExchange.Databases.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         { 
-            modelBuilder.Entity<ExchangeOrder>()
-                .HasOne(e => e.FirstBook)
-                .WithMany()
-                .OnDelete(DeleteBehavior.Restrict);
+            base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<ExchangeOrder>()
-                .HasOne(e => e.SecondBook)
-                .WithMany()
-                .OnDelete(DeleteBehavior.Restrict);
+            //modelBuilder.Entity<ExchangeOrder>()
+            //    .HasOne(e => e.FirstBook)
+            //    .WithMany()
+            //    .OnDelete(DeleteBehavior.Restrict);
+
+            //modelBuilder.Entity<ExchangeOrder>()
+            //    .HasOne(e => e.SecondBook)
+            //    .WithMany()
+            //    .OnDelete(DeleteBehavior.Restrict);
         }
 
     }

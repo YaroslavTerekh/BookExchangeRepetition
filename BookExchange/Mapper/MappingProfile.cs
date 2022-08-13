@@ -1,4 +1,4 @@
-﻿using BookExchange.DTOs;
+﻿using BookExchange.Domain.DTOs;
 using BookExchange.Domain.Models;
 using AutoMapper;
 
