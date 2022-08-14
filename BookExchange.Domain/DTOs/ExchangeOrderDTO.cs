@@ -2,7 +2,7 @@
 {
     public class ExchangeOrderDTO
     {
-        public BookDTO FirstBook { get; set; }
-        public BookDTO SecondBook { get; set; }
+        public Guid FirstBookId { get; set; }
+        public Guid SecondBookId { get; set; }
     }
 }
