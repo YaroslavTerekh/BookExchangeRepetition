@@ -11,12 +11,12 @@ namespace BookExchange.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUsersRepository _usersRepo;
+        private readonly IContentRepository _contentRepo;
         private readonly IMapper _mapper;
 
-        public UserController(IUsersRepository usersRepo, IMapper mapper)
+        public UserController(IContentRepository usersRepo, IMapper mapper)
         {
-            _usersRepo = usersRepo;
+            _contentRepo = usersRepo;
             _mapper = mapper;
         }
 
@@ -24,9 +24,9 @@ namespace BookExchange.Controllers
         public async Task<IActionResult> Users()
         {
             try{
-                var users = await _usersRepo.GetAllUsers();
+                var users = await _contentRepo.GetAllUsers();
 
-                return Ok(_mapper.Map<IEnumerable<UserDTO>>(users));
+                return Ok(/*_mapper.Map<IEnumerable<UserDTO>>(*/users/*)*/);
             }
             catch(Exception exc)
             {
@@ -35,11 +35,11 @@ namespace BookExchange.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser(int id)
+        public async Task<IActionResult> GetUser(Guid id)
         {
             try
             {
-                return Ok(_mapper.Map<UserDTO>(_usersRepo.GetUser(id)));
+                return Ok(_mapper.Map<UserDTO>(_contentRepo.GetUser(id)));
             }
             catch (Exception exc)
             {
@@ -52,7 +52,7 @@ namespace BookExchange.Controllers
         {
             try
             {
-                return Ok(_usersRepo.ModifyUserInfo(user));
+                return Ok(_contentRepo.ModifyUserInfo(user));
             }
             catch (Exception exc)
             {

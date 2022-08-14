@@ -27,7 +27,7 @@ namespace BookExchange.Controllers
             {
                 var orders = await _contentRepo.GetAllOrders();
 
-                return Ok(_mapper.Map<IEnumerable<ExchangeOrderDTO>>(orders));
+                return Ok(/*_mapper.Map<IEnumerable<ExchangeOrderDTO>>(*/orders/*)*/);
             }
             catch (Exception exc)
             {
@@ -36,11 +36,11 @@ namespace BookExchange.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetOrder(int id)
+        public async Task<IActionResult> GetOrder(Guid id)
         {
             try
             {
-                return Ok(_mapper.Map<ExchangeOrderDTO>(await _contentRepo.GetOrder(id)));
+                return Ok(/*_mapper.Map<ExchangeOrderDTO>(*/await _contentRepo.GetOrder(id)/*)*/);
             }
             catch (Exception exc)
             {
@@ -49,13 +49,15 @@ namespace BookExchange.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddBook(ExchangeOrder order)
+        public async Task<IActionResult> AddOrder(ExchangeOrder order)
         {
             try
-            {
+            { 
+
                 await _contentRepo.AddOrder(order);
 
-                return CreatedAtAction(nameof(_contentRepo.AddBook), new { id = order.Id }, order);
+                //return Ok(order);
+                return CreatedAtAction(nameof(_contentRepo.AddOrder), new { id = order.Id }, order);
             }
             catch (Exception exc)
             {
@@ -79,7 +81,7 @@ namespace BookExchange.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrder(int id)
+        public async Task<IActionResult> DeleteOrder(Guid id)
         {
             try
             {
@@ -93,4 +95,4 @@ namespace BookExchange.Controllers
             }
         }
     }
-}
+} 

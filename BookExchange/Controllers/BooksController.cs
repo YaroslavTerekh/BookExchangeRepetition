@@ -26,8 +26,8 @@ namespace BookExchange.Controllers
             try
             {
                 var books = await _contentRepo.GetAllBooks();
-
-                return Ok(_mapper.Map<IEnumerable<BookDTO>>(books));
+                
+                return Ok(/*_mapper.Map<IEnumerable<BookDTO>>(*/books/*)*/);
             }
             catch (Exception exc)
             {
@@ -36,11 +36,11 @@ namespace BookExchange.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetBook(int id)
+        public async Task<IActionResult> GetBook(Guid id)
         {
             try
             {
-                return Ok(_mapper.Map<BookDTO>(await _contentRepo.GetBook(id)));
+                return Ok(/*_mapper.Map<BookDTO>(*/await _contentRepo.GetBook(id)/*)*/);
             }
             catch(Exception exc)
             {
@@ -79,7 +79,7 @@ namespace BookExchange.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBook(int id)
+        public async Task<IActionResult> DeleteBook(Guid id)
         {
             try
             {

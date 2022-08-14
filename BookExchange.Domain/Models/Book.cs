@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookExchange.Domain.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,7 +11,8 @@ namespace BookExchange.Domain.Models
 {
     public class Book
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
         //[Required(ErrorMessage = "Enter title of your book!")]
         //[MaxLength(100, ErrorMessage = "Too long length of title!")]
         public string Title { get; set; }
@@ -20,8 +22,6 @@ namespace BookExchange.Domain.Models
         public string Description { get; set; }
         //[Required(ErrorMessage = "Upload a photo of book!")]
         public Image Image { get; set; }
-        public User Owner { get; set; }
-
-        public bool isApproved { get; set; }
+        public State State { get; set; }
     }
 }

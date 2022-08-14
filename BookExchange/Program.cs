@@ -17,7 +17,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddDbContextsCustom(builder.Configuration);
 //Depency Injection
 builder.Services.AddTransient<IContentRepository, ContentRepository>();
-builder.Services.AddTransient<IUsersRepository, UsersRepository>();
+//builder.Services.AddTransient<IUsersRepository, UsersRepository>();
 
 var app = builder.Build();
 

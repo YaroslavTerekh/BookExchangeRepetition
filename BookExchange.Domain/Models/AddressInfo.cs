@@ -10,7 +10,7 @@ namespace BookExchange.Domain.Models
 {
     public class AddressInfo
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         //[Required(ErrorMessage = "Enter your country!")]
         public string Country { get; set; }
         //[Required(ErrorMessage = "Enter your city!")]

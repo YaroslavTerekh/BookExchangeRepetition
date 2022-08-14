@@ -11,13 +11,16 @@ namespace BookExchange.Databases.DbRepositories.Interfaces
     {
         public Task<IEnumerable<Book>> GetAllBooks();
         public Task AddBook(Book book);
-        public Task<Book> GetBook(int id);
-        public Task DeleteBook(int id);
+        public Task<Book> GetBook(Guid id);
+        public Task DeleteBook(Guid id);
         public Task ModifyBook(Book book);
         public Task<IEnumerable<ExchangeOrder>> GetAllOrders();     
         public Task AddOrder(ExchangeOrder order);
-        public Task<ExchangeOrder> GetOrder(int id);
-        public Task DeleteOrder(int id);
+        public Task<ExchangeOrder> GetOrder(Guid id);
+        public Task DeleteOrder(Guid id);
         public Task ModifyOrder(ExchangeOrder order);
+        public Task<IEnumerable<User>> GetAllUsers();
+        public Task<User> GetUser(Guid id);
+        public Task ModifyUserInfo(User user);
     }
 }
