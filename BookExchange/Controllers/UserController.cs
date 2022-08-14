@@ -26,7 +26,7 @@ namespace BookExchange.Controllers
             try{
                 var users = await _contentRepo.GetAllUsers();
 
-                return Ok(/*_mapper.Map<IEnumerable<UserDTO>>(*/users/*)*/);
+                return Ok(_mapper.Map<IEnumerable<UserDTO>>(users));
             }
             catch(Exception exc)
             {

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BookExchange.Databases.DbRepositories.Interfaces;
 using BookExchange.Domain.Models;
-using BookExchange.DTOs;
+using BookExchange.Domain.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,7 +27,7 @@ namespace BookExchange.Controllers
             {
                 var books = await _contentRepo.GetAllBooks();
                 
-                return Ok(/*_mapper.Map<IEnumerable<BookDTO>>(*/books/*)*/);
+                return Ok(_mapper.Map<IEnumerable<BookDTO>>(books));
             }
             catch (Exception exc)
             {
@@ -40,7 +40,7 @@ namespace BookExchange.Controllers
         {
             try
             {
-                return Ok(/*_mapper.Map<BookDTO>(*/await _contentRepo.GetBook(id)/*)*/);
+                return Ok(_mapper.Map<BookDTO>(await _contentRepo.GetBook(id)));
             }
             catch(Exception exc)
             {
