@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BookExchange.Databases.DbRepositories.Interfaces;
 using BookExchange.Domain.Models;
-using BookExchange.DTOs;
+using BookExchange.Domain.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
