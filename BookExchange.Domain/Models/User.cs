@@ -8,7 +8,7 @@ namespace BookExchange.Domain.Models
 {
     public class User
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         //[Required(ErrorMessage = "Enter your name!")]
         //[MaxLength(15, ErrorMessage = "Too long name!")]
         public string Name { get; set; }
@@ -24,6 +24,6 @@ namespace BookExchange.Domain.Models
         public string Password { get; set; }
         public Roles Role { get; set; }
 
-        public bool IsBanned { get; set; }
+        public bool IsBanned { get; set; } = false;
     }
 }

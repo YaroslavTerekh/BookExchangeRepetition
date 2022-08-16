@@ -25,12 +25,12 @@ namespace BookExchange.Databases.DbRepositories
 
         public async Task<User> GetUser(int id)
         {
-            return await _context.Users.Where(u => u.ID == id).FirstOrDefaultAsync();
+            return await _context.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task ModifyUserInfo(User user)
         {
-            User originalUser = await GetUser(user.ID);
+            User originalUser = await GetUser(user.Id);
 
             originalUser.Name = user.Name;
             originalUser.SecondName = user.SecondName;
