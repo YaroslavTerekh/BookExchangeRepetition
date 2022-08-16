@@ -23,7 +23,7 @@ namespace BookExchange.Databases.DbRepositories
         {
             return await _context.Books
                 .Include(b => b.Image)
-                .Include(b => b.Owner)
+                .Include(b => b.User)
                 .ThenInclude(o => o.Address)
                 .ToListAsync();
         }
@@ -38,7 +38,7 @@ namespace BookExchange.Databases.DbRepositories
         {
             return await _context.Books.Where(b => b.Id == id)
                 .Include(b => b.Image)
-                .Include(b => b.Owner)
+                .Include(b => b.User)
                 .ThenInclude(o => o.Address)
                 .FirstOrDefaultAsync();
         }
@@ -64,9 +64,9 @@ namespace BookExchange.Databases.DbRepositories
         {
             return await _context.Orders
                 .Include(o => o.FirstBook).ThenInclude(b => b.Image)
-                .Include(o => o.FirstBook).ThenInclude(b => b.Owner.Address)
+                .Include(o => o.FirstBook).ThenInclude(b => b.User.Address)
                 .Include(o => o.SecondBook).ThenInclude(b => b.Image)
-                .Include(o => o.SecondBook).ThenInclude(b => b.Owner.Address)
+                .Include(o => o.SecondBook).ThenInclude(b => b.User.Address)
                 .ToListAsync();
         }
 
@@ -81,9 +81,9 @@ namespace BookExchange.Databases.DbRepositories
             return await _context.Orders
                 .Where(o => o.Id == id)
                 .Include(o => o.FirstBook).ThenInclude(b => b.Image)
-                .Include(o => o.FirstBook).ThenInclude(b => b.Owner.Address)
+                .Include(o => o.FirstBook).ThenInclude(b => b.User.Address)
                 .Include(o => o.SecondBook).ThenInclude(b => b.Image)
-                .Include(o => o.SecondBook).ThenInclude(b => b.Owner.Address).FirstOrDefaultAsync();
+                .Include(o => o.SecondBook).ThenInclude(b => b.User.Address).FirstOrDefaultAsync();
         }
 
         public async Task DeleteOrder(int id)
@@ -100,6 +100,12 @@ namespace BookExchange.Databases.DbRepositories
             originalOrder.SecondBook = order.SecondBook;
 
             await _context.SaveChangesAsync();
+        }
+        
+        //Users
+        public async Task<User> GetUser(int id)
+        {
+            return await _context.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
         }
     }
 }

@@ -12,7 +12,9 @@ namespace BookExchange.Domain.Models
         public int Id { get; set; }
         public Book FirstBook { get; set; }
         public Book SecondBook { get; set; }
+        public int FirstBookId { get; set; }
+        public int SecondBookId { get; set; }
 
-        public bool IsApproved { get; set; }
+        public bool IsApproved { get; set; } = false;
     }
 }

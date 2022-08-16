@@ -49,13 +49,18 @@ namespace BookExchange.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddBook(ExchangeOrder order)
+        public async Task<IActionResult> AddOrder(ExchangeOrderDTO order)
         {
             try
             {
-                await _contentRepo.AddOrder(order);
+                var newOrder = _mapper.Map<ExchangeOrder>(order);
 
-                return CreatedAtAction(nameof(_contentRepo.AddBook), new { id = order.Id }, order);
+                newOrder.FirstBook = await _contentRepo.GetBook(order.FirstBookId);
+                newOrder.SecondBook = await _contentRepo.GetBook(order.SecondBookId);
+
+                await _contentRepo.AddOrder(newOrder);
+
+                return CreatedAtAction(nameof(_contentRepo.AddOrder), new { id = newOrder.Id }, newOrder);
             }
             catch (Exception exc)
             {
