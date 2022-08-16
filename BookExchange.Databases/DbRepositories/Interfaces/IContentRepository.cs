@@ -19,5 +19,6 @@ namespace BookExchange.Databases.DbRepositories.Interfaces
         public Task<ExchangeOrder> GetOrder(int id);
         public Task DeleteOrder(int id);
         public Task ModifyOrder(ExchangeOrder order);
+        public Task<User> GetUser(int id);
     }
 }

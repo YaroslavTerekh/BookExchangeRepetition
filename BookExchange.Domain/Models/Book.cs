@@ -20,8 +20,9 @@ namespace BookExchange.Domain.Models
         public string Description { get; set; }
         //[Required(ErrorMessage = "Upload a photo of book!")]
         public Image Image { get; set; }
-        public User Owner { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
 
-        public bool isApproved { get; set; }
+        public bool isApproved { get; set; } = false;
     }
 }

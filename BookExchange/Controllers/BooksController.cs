@@ -2,6 +2,7 @@
 using BookExchange.Databases.DbRepositories.Interfaces;
 using BookExchange.Domain.Models;
 using BookExchange.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,7 @@ namespace BookExchange.Controllers
             _contentRepo = contentRepo;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Books()
         {
@@ -49,13 +51,16 @@ namespace BookExchange.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddBook(Book book)
+        public async Task<IActionResult> AddBook(BookDTO book)
         {
             try
             {
-                await _contentRepo.AddBook(book);
+                var newBook = _mapper.Map<Book>(book);
+                newBook.User = await _contentRepo.GetUser(newBook.UserId);
 
-                return CreatedAtAction(nameof(_contentRepo.AddBook), new { id = book.Id }, book);
+                await _contentRepo.AddBook(newBook);
+
+                return CreatedAtAction(nameof(_contentRepo.AddBook), new { id = newBook.Id }, book);
             }
             catch(Exception exc)
             {
